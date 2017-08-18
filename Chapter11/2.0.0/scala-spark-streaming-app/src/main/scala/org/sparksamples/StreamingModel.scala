@@ -1,7 +1,7 @@
 import java.io.PrintWriter
 import java.net.ServerSocket
 
-import breeze.linalg.DenseVector
+import breeze.linalg.DenseVector // 不支持Java就不用它
 import org.apache.spark.mllib.linalg.Vectors
 import org.apache.spark.mllib.regression.{StreamingLinearRegressionWithSGD, LabeledPoint}
 import org.apache.spark.streaming.{Seconds, StreamingContext}
@@ -80,10 +80,10 @@ object SimpleStreamingModel {
     val ssc = new StreamingContext("local[2]", "First Streaming App", Seconds(10))
     val stream = ssc.socketTextStream("localhost", 9999)
 
-    val NumFeatures = 100
-    val zeroVector = DenseVector.zeros[Double](NumFeatures)
+    val zeroVectorData = Array(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+
     val model = new StreamingLinearRegressionWithSGD()
-      .setInitialWeights(Vectors.dense(zeroVector.data))
+      .setInitialWeights(Vectors.dense(zeroVectorData))
       .setNumIterations(1)
       .setStepSize(0.01)
 
